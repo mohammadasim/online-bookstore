@@ -1,0 +1,7 @@
+venv
+.gitignore
+.idea
+README.md
+LICENSE
+db.sqlite3
+nginx.conf

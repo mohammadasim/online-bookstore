@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y71sjn_a4)8a-l4p68w!=th!pc0h320k&#)@=zxc@ny4=op7oy'
+SECRET_KEY = os.environ.get('SECRET_KEY', '')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'bookstore_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('PGSQL_DB_NAME'),
+        'USER': os.environ.get('PGSQL_DB_USER'),
+        'PASSWORD': os.environ.get('PGSQL_DB_PASW'),
+        'HOST': os.environ.get('PGSQL_DB_HOST'),
+        'PORT': os.environ.get('PGSQL_DB_PORT')
     }
 }
 

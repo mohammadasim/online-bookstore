@@ -9,7 +9,7 @@ services:
     ports: 
       - 8000:8000
     env_file: 
-      - env-app.list
+      - app-env.list
     networks: 
       - books
     depends_on: 
@@ -21,9 +21,9 @@ services:
     ports: 
       - 5432:5432
     volumes: 
-      - <postgres-data-volume>:/var/lib/postgresql/data
+      - ~/.docker_db_data/postgres:/var/lib/postgresql/data
     env_file: 
-      - env-app.list
+      - postgres-env.list
     restart: always
     networks: 
       - books
@@ -32,9 +32,9 @@ services:
     container_name: pgadmin
     image: dpage/pgadmin4
     env_file: 
-      - env-app.list
+      - postgres-env.list
     volumes: 
-      - <pgadmin-data-volume>:/var/lib/pgadmin
+      - ~/.docker_db_data/pgadmin:/var/lib/pgadmin
     networks: 
       - books
     restart: always
@@ -58,3 +58,4 @@ services:
 networks: 
   books:
     driver: bridge
+

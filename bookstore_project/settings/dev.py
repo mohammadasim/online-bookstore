@@ -14,3 +14,4 @@ DATABASES = {
         'PORT': os.environ.get('PGSQL_DB_PORT')
     }
 }
+LOGIN_REDIRECT_URL = 'home'

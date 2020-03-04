@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # third-party
+    'crispy_forms',
     # local
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
@@ -119,5 +121,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
+# The FileSystemFinder looks within the STATICFILES_DIRS setting, which is setup in dev.py and set to 'static'
+# for any static files. Then the AppDirectoriesFinder looks for any directories named 'static' located within an app,
+# as opposed to located at a project-level static directory.
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder"
+]
 AUTH_USER_MODEL = 'users.CustomUser'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,9 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.urls import reverse, resolve
-
-from .forms import CustomUserCreationForm
-from .views import SignupPageView
+from django.urls import reverse
 
 
 class CustomUserTests(TestCase):
@@ -38,32 +35,34 @@ class CustomUserTests(TestCase):
         self.assertTrue(admin_user.is_staff)
 
 
-class SignupPageTests(TestCase):
+class SignupTests(TestCase):
     """
-    Test class to test signup page view and its functionality
+    Test class to test signup process provided by django allauth
     """
+    username = 'newuser'
+    email = 'newuser@email.com'
 
     def setUp(self) -> None:
         """ Overriding the setup method to create a response object """
-        url = reverse('signup')
+        url = reverse('account_signup')
         self.response = self.client.get(url)
 
     def test_signup_template(self):
         """ Test suite for signup Template """
         self.assertEqual(self.response.status_code, 200)
-        self.assertTemplateUsed(self.response, 'signup.html')
+        self.assertTemplateUsed(self.response, 'account/signup.html')
         self.assertContains(self.response, 'Sign Up')
         self.assertNotContains(self.response, 'Hello world')
 
     def test_signup_form(self):
-        """ Test suite for signup form """
-        form = self.response.context.get('form')
-        self.assertIsInstance(form, CustomUserCreationForm)
-
-    def test_signup_view(self):
-        """ Test suite for signup view """
-        view = resolve('/accounts/signup/')
-        self.assertEqual(
-            view.func.__name__,
-            SignupPageView.as_view().__name__
-        )
+        """
+        Test to ensure that user is created with correct
+        username and email.
+        Django creates test database and destroys it hence the index 0
+        in test.
+        """
+        new_user = get_user_model().objects.create_user(
+            self.username, self.email)
+        self.assertEqual(get_user_model().objects.all().count(), 1)
+        self.assertEqual(get_user_model().objects.all()[0].username, self.username)
+        self.assertEqual(get_user_model().objects.all()[0].email, self.email)

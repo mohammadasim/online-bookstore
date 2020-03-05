@@ -35,8 +35,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # added as required by Allauth
     # third-party
     'crispy_forms',
+    'allauth',
+    'allauth.account',
     # local
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',

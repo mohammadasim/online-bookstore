@@ -8,4 +8,16 @@
     <p>{{ book.author }}</p>
     <p>{{ book.price }}</p>
 </div>
+<div>
+    <h3>Reviews</h3>
+    <ul>
+        {% for review in book.reviews.all %}
+        <li>{{ review.review }} ({{ review.author }})
+            {% if user.is_authenticated and user == review.author %}
+            <a href="{{ review.get_absolute_url }}">Edit</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock content %}

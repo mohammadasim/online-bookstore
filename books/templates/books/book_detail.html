@@ -15,6 +15,7 @@
         <li>{{ review.review }} ({{ review.author }})
             {% if user.is_authenticated and user == review.author %}
             <a href="{{ review.get_absolute_url }}">Edit</a>
+            <a href="{{ review.get_absolute_url }}/delete/">Delete</a>
             {% endif %}
         </li>
         {% endfor %}

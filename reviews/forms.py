@@ -24,6 +24,11 @@ class ReviewForm(ModelForm):
         ]
 
     def clean_book(self, *args, **kwargs):
+        """
+        This method checks if a user has already reviewed
+        the selected book. As per django docs exists() is
+        an efficient way of checking this.
+        """
         book = self.cleaned_data.get("book")
         if Review.objects.filter(book=book, author=self.user).exists():
             raise forms.ValidationError("Book already reviewed by user {}".format(self.user))

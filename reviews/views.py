@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 
 from .forms import ReviewForm
 from .models import Review
@@ -44,3 +44,11 @@ class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     ]
     template_name = 'reviews/review_update_form.html'
     success_url = reverse_lazy('book_list')
+
+
+class ReviewDeleteView(LoginRequiredMixin, DeleteView):
+    model = Review
+    success_url = reverse_lazy('book_list')
+    login_url = reverse_lazy('account_login')
+    context_object_name = 'review'
+    template_name = 'reviews/review_confirm_delete.html'

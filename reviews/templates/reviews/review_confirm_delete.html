@@ -1,0 +1,11 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Delete Review{% endblock title %}
+{% block content %}
+<h2 class="text-danger">Delete Review</h2>
+<form action="" method="post">
+    {% csrf_token %}
+    <p class="text-danger">Are you sure you want to delete review, "{{ review.title }}"?</p>
+    <input class="btn btn-danger" type="submit" value="Delete Review">
+</form>
+{% endblock content %}

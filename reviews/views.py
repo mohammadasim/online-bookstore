@@ -23,6 +23,16 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         review.save()
         return super().form_valid(form)
 
+    def get_form_kwargs(self):
+        """
+        This method returns a dictionary with the kwargs that will be passed
+        to the __init__ of the ReviewForm. Our form expects a kwargs named
+        'user'. We add user to the kwargs so that our form gets it.
+        """
+        kwargs = super(ReviewCreateView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 
 class ReviewUpdateView(LoginRequiredMixin, UpdateView):
     """ A view to update an existing review """

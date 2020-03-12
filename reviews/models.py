@@ -47,6 +47,3 @@ class Review(models.Model):
         in the url.
         """
         return reverse('review_update', args=[str(self.id)])
-
-    def clean_book(self):
-        pass

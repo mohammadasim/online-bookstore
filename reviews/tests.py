@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.urls import reverse
 
 from books.models import Book
 from .models import Review
@@ -27,4 +28,37 @@ class ReviewTest(TestCase):
         )
 
     def test_book(self):
-        self.assertEqual(f)
+        self.assertEqual(self.book.title, 'Harry Potter')
+        self.assertEqual(self.book.author, 'JK Rowling')
+        self.assertEqual(self.book.price, '25.00')
+
+    def test_review(self):
+        self.assertEqual(self.review.book, self.book)
+        self.assertEqual(self.review.title, 'A nice book')
+        self.assertEqual(self.review.type, 'POS')
+        self.assertEqual(self.review.review, 'A very nice book. Enjoyed it.')
+        self.assertEqual(self.review.author, self.user)
+
+    def test_create_review_view(self):
+        """
+        In this test we login a user and then call create review url
+        follow is set to true so that we follow the redirection for
+        authentication.
+        """
+        self.client.login(email=self.user.email, password=self.user.password)
+        response = self.client.get(reverse('review_create'), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'account/login.html')
+
+
+class LoginRequiredCreateReviewView(TestCase):
+    """
+    A class to test that anonymous user is
+    redirected to login page when creating a review
+    """
+
+    def test_redirection(self):
+        url = reverse('review_create')
+        login_url = reverse('account_login')
+        response = self.client.get(url)
+        self.assertRedirects(response, '{login_url}?next={url}'.format(login_url=login_url, url=url))

@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.urls import reverse
+from django.urls import reverse, resolve
 
 from books.models import Book
 from .models import Review
+from .views import ReviewCreateView
 
 
 class ReviewTest(TestCase):
@@ -44,11 +45,47 @@ class ReviewTest(TestCase):
         In this test we login a user and then call create review url
         follow is set to true so that we follow the redirection for
         authentication.
+        using force_login  will login the user without us having to
+        worry about password or anything. If login is used the test will fail
         """
-        self.client.login(email=self.user.email, password=self.user.password)
+        self.client.force_login(self.user)
         response = self.client.get(reverse('review_create'), follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'account/login.html')
+        self.assertTemplateUsed(response, 'reviews/review_create_form.html')
+        self.assertContains(response, 'Write Review')
+        self.assertNotContains(response, 'Hello world')
+        response = self.client.post(reverse('review_create'), {
+            'title': 'abc',
+            'review': 'def',
+            'type': 'POS',
+            'book': self.book
+        },
+                                    follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_review_url_resolves_review_create_view(self):
+        view = resolve('/reviews/create/')
+        self.assertEqual(
+            view.func.__name__,
+            ReviewCreateView.as_view().__name__
+        )
+
+    def test_review_update_view(self):
+        self.client.force_login(self.user)
+        response = self.client.get(self.review.get_absolute_url(), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'reviews/review_update_form.html')
+        self.assertContains(response, 'Update Review')
+        self.assertContains(response, 'A nice book')
+        response = self.client.post(self.review.get_absolute_url(),
+                                    {
+                                        'title': 'A bad book'
+                                    },
+                                    follow=True)
+        # response = self.client.get(self.review.get_absolute_url(), follow=True)
+        self.assertEqual(response.status_code, 200)
+        review = Review.objects.all()
+        print(review)
 
 
 class LoginRequiredCreateReviewView(TestCase):

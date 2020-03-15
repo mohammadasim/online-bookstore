@@ -45,14 +45,25 @@ services:
     container_name: nginx
     image: nginx:alpine
     restart: unless-stopped
-    ports: 
+    ports:
       - 80:80
-    volumes: 
+    volumes:
       - ./nginx-conf:/etc/nginx/conf.d
-    networks: 
+    networks:
       - books
-    depends_on: 
+    depends_on:
       - web
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    volumes:
+      - ~/.docker_db_data/redis:/data
+    networks:
+      - books
 
 
 networks: 

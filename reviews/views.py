@@ -5,6 +5,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView
 
 from .forms import ReviewForm
 from .models import Review
+from .tasks import print_greetings
 
 
 class ReviewCreateView(LoginRequiredMixin, CreateView):
@@ -16,11 +17,14 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         review = form.save(commit=False)
+        book = form.cleaned_data.get('book')
+        review_type = form.cleaned_data.get('type')
         try:
             review.author = self.request.user
         except ObjectDoesNotExist:
             pass
         review.save()
+        print_greetings.delay(100)
         return super().form_valid(form)
 
     def get_form_kwargs(self):

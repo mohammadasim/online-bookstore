@@ -65,6 +65,19 @@ services:
     networks:
       - books
 
+  celery:
+    build: .
+    command: /usr/local/bin/celery worker -A bookstore_project --loglevel=INFO
+    volumes:
+      - .:/code
+    env_file:
+      - app-env.list
+    networks:
+      - books
+    depends_on:
+      - postgres
+      - redis
+
 
 networks: 
   books:

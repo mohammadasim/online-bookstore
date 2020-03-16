@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'allauth',
     'allauth.account',
+    'django_celery_results',
     # local
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',

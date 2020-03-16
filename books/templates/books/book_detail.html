@@ -13,6 +13,7 @@
 </div>
 <div>
     <h3>Reviews</h3>
+    <p><a href="{% url 'review_create' %}">Write review</a></p>
     <ul>
         {% for review in book.reviews.all %}
         <li>{{ review.review }} ({{ review.author }})

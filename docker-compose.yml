@@ -67,7 +67,7 @@ services:
 
   celery:
     build: .
-    command: /usr/local/bin/celery worker -A bookstore_project --loglevel=INFO
+    command: /usr/local/bin/celery worker -A bookstore_project -Q celery --loglevel=INFO
     volumes:
       - .:/code
     env_file:

@@ -44,5 +44,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # CELERY SETTINGS
 CELERY_BROKER_URL = 'redis://redis:6379'
-CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'UTC'

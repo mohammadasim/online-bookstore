@@ -24,7 +24,7 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
         except ObjectDoesNotExist:
             pass
         review.save()
-        print_greetings.delay(100)
+        print_greetings.delay(100, review_type)
         return super().form_valid(form)
 
     def get_form_kwargs(self):

@@ -2,6 +2,6 @@ from celery import shared_task
 
 
 @shared_task
-def print_greetings(numb):
+def print_greetings(numb, review_type):
     for no in range(numb):
-        print('Running first celery task.')
+        print('A {} review was submitted.'.format(review_type))

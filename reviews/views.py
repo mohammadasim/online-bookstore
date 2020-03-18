@@ -17,7 +17,6 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         review = form.save(commit=False)
-        book = form.cleaned_data.get('book')
         review_type = form.cleaned_data.get('type')
         try:
             review.author = self.request.user

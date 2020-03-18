@@ -6,3 +6,4 @@ Pillow==7.0.0
 celery==4.4.1
 redis==3.4.1
 django-celery-results==1.2.1
+boto3==1.12.22

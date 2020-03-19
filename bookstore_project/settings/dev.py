@@ -39,10 +39,18 @@ ACCOUNT_UNIQUE_EMAIL = True
 DEFAULT_FROM_EMAIL = 'admin@onlinebookstore.com'
 
 # Media settings
+""" Removed MEDIA_ROOT as django-storage will upload the files to s3"""
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # CELERY SETTINGS
 CELERY_BROKER_URL = 'redis://redis:6379'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TIMEZONE = 'UTC'
+
+# DJANGO STORAGE SETTINGS
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY')
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'  # replacing MEDIA_ROOT
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.environ.get('AWS_REGION')
+AWS_DEFAULT_ACL = 'private'

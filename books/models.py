@@ -3,6 +3,8 @@ import uuid
 from django.db import models
 from django.urls import reverse
 
+from .helpers import UniqueFilePath
+
 
 class Book(models.Model):
     """ A model class representing a book in the book store """
@@ -16,7 +18,7 @@ class Book(models.Model):
                             blank=True)
     author = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    cover = models.ImageField(upload_to='covers/', blank=True)
+    cover = models.ImageField(upload_to=UniqueFilePath(slug), blank=True)
 
     def __str__(self):
         return self.title

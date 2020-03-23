@@ -54,3 +54,5 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'  # replacing M
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET_NAME')
 AWS_S3_REGION_NAME = os.environ.get('AWS_REGION')
 AWS_DEFAULT_ACL = 'private'
+# Do not overwrite files with the same name
+AWS_S3_FILE_OVERWRITE = False

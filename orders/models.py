@@ -2,12 +2,12 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse
 
-from books.models import Book
 from payments.models import CustomerPayment
 
 
-class CustomerOrders(models.Model):
+class CustomerOrder(models.Model):
     """
     A model representing a customer order in the application
     """
@@ -24,14 +24,14 @@ class CustomerOrders(models.Model):
     )
     customer_id = models.ForeignKey(
         get_user_model(),
-        on_delete=models.CASCADE,
+        on_delete=models.SET_DEFAULT,
         related_name='orders',
-        default=''
+        default='anonymous'
     )
     payment_id = models.ForeignKey(
         CustomerPayment,
         on_delete=models.CASCADE,
-        related_name='order_for_the_payment'
+        related_name='payment_for_order'
     )
     order_status = models.CharField(
         max_length=5,
@@ -49,22 +49,9 @@ class CustomerOrders(models.Model):
     def __str__(self):
         return str(self.order_id)
 
-
-class CustomerOrderProduct(models.Model):
-    """
-    A model representing a product ordered by a customer
-    A customerOrderProduct is for an individual product
-    an order can have 1 or many CustomerOrderProducts
-    """
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
-    product_id = models.ForeignKey(Book,
-                                   on_delete=models.CASCADE)
-    quantity = models.IntegerField(max_length=4)
-    price = models.DecimalField(
-        max_digits=9,
-        decimal_places=2
-    )
+    def get_absolute_url(self):
+        """
+        A method to return url for an order, with 
+        order_id in the url
+        """
+        return reverse('order_detail', args=[str(self.order_id)])

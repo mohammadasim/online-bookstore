@@ -2,6 +2,8 @@ from .base import *
 
 DEBUG = True
 
+CURRENCY = '£'
+
 ALLOWED_HOSTS = ["app"]
 
 DATABASES = {

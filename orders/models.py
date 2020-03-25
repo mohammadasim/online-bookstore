@@ -2,6 +2,7 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Sum
 from django.urls import reverse
 
 from payments.models import CustomerPayment
@@ -43,11 +44,19 @@ class CustomerOrder(models.Model):
     )
     order_price = models.DecimalField(
         max_digits=9,
-        decimal_places=2
+        decimal_places=2,
+        default=0.00
     )
 
     def __str__(self):
         return str(self.order_id)
+
+    def save(self, *args, **kwargs):
+        order_items = self.order_items  # order_items is reverse relationship defined in order_item model
+        # Using django aggregate and sum tools we calculate
+        # the price of the order, we are using reverse relationship again.
+        self.order_price = order_items.aggregate(Sum('price')) if order_items.exists() else 0.00
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """

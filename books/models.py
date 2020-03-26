@@ -30,3 +30,9 @@ class Book(models.Model):
         in the url. This url is used to get BookDetailView
         """
         return reverse('book_detail', args=[str(self.id)])
+
+    def get_add_to_cart_url(self):
+        """
+        A method that will add a book to a cart
+        """
+        return reverse('order_items:order_product_create', kwargs={'uuid': self.id})

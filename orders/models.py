@@ -14,7 +14,7 @@ class CustomerOrder(models.Model):
     """
     ORDER_STATUS = (
         ('PND', 'Pending'),
-        ('CNF', 'CONFIRMED'),
+        ('PAD', 'PAID'),
         ('AWD', 'AWAITING DELIVERY'),
         ('DLD', 'DELIVERED'),
     )
@@ -32,11 +32,13 @@ class CustomerOrder(models.Model):
     payment_id = models.ForeignKey(
         CustomerPayment,
         on_delete=models.CASCADE,
-        related_name='payment_for_order'
+        related_name='payment_for_order',
+        blank=True
     )
     order_status = models.CharField(
-        max_length=5,
-        choices=ORDER_STATUS
+        max_length=3,
+        choices=ORDER_STATUS,
+        default='PND'
     )
     order_date = models.DateField(
         'Order Date',

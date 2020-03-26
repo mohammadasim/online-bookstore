@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Write Review{% endblock title %}
+{% block content %}
+<h2>Order Book</h2>
+<h2><a href="">{{ book.title }}</a></h2>
+<div class="book-detail">
+    {% if book.cover %}
+    <img alt="{{book.title}}" class="bookcover" src="{{book.cover.url}}">
+    {% endif %}
+    <p>Quantity in stock: {{ book.quantity }}</p>
+</div>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form | crispy }}
+    <input class="btn btn-success" type="submit" value="Place Order">
+</form>
+{% endblock content %}

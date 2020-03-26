@@ -7,7 +7,7 @@ from books.models import Book
 from orders.models import CustomerOrder
 
 
-class OrderItems(models.Model):
+class OrderItem(models.Model):
     """
     A model representing a book ordered by a customer
     A order_item is for an individual book
@@ -30,9 +30,6 @@ class OrderItems(models.Model):
     order_id = models.ForeignKey(CustomerOrder,
                                  on_delete=models.CASCADE,
                                  related_name='order_items')
-
-    def __str__(self):
-        return str(self.book.title)
 
     def save(self, *args, **kwargs):
         self.price = self.book.price * self.quantity

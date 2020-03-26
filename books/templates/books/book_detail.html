@@ -10,6 +10,11 @@
     <h2><a href="">{{ book.title }}</a></h2>
     <p>{{ book.author }}</p>
     <p>£{{ book.price }}</p>
+    {% if book.quantity == 0 %}
+    <P class="text-danger">Sorry this book is out of stock</P>
+    {% else %}
+    <p><a href="{{ book.get_add_to_cart_url }}">Add to cart</a></p>
+    {% endif %}
 </div>
 <div>
     <h3>Reviews</h3>

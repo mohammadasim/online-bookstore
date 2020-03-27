@@ -58,3 +58,9 @@ AWS_S3_REGION_NAME = os.environ.get('AWS_REGION')
 AWS_DEFAULT_ACL = 'private'
 # Do not overwrite files with the same name
 AWS_S3_FILE_OVERWRITE = False
+
+# django debug toolbar settings
+import socket
+
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + '1' for ip in ips]

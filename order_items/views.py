@@ -29,32 +29,35 @@ def order_item_create_view(request, uuid):
         # check if the form is valid
         if form.is_valid():
             order_item = form.save(commit=False)
-            print(order_item)
             # check if there is a pending order for customer
             order = CustomerOrder.objects.filter(customer_id=request.user, order_status='PND')
             if order.exists():
                 # if there is a pending order for the customer, check if the book ordered is in the order
-                book_already_ordered = OrderItem.objects.filter(book=book, order_id=order)
+                book_already_ordered = OrderItem.objects.filter(book=book, order_id__in=order)
                 if book_already_ordered.exists():
                     # if it exists add the quantity ordered to the existing quantity
-                    book_already_ordered.quantity += order_item.quantity
-                    book_already_ordered.save()
+                    book_already_ordered.first().quantity += order_item.quantity
+                    book_already_ordered.first().save()
                 else:
                     # Create a new order_item for the book
-                    new_order_item = OrderItem(book=book,
-                                               quantity=order_item.get('quantity'),
-                                               order_id=order)
+                    new_order_item = OrderItem(quantity=order_item.quantity,
+                                               book=book,
+                                               order_id=order.first())
                     new_order_item.save()
-                    return redirect(order.get_absolute_url())
+                    order.first().save()
+
+                    return redirect('orders:order_detail', slug=order.first().order_id)
             else:
                 # If there isn't any pending order for the customer
                 new_order = CustomerOrder(customer_id=request.user)
                 # Create new order_item for the book
-                new_order_item = OrderItem(order_item.quantity,
-                                           order_id=new_order
+                new_order_item = OrderItem(quantity=order_item.quantity,
+                                           order_id=new_order,
+                                           book=book
                                            )
+                new_order.save()
                 new_order_item.save()
-                return redirect(order.get_absolute_url())
+                return redirect('orders:order_detail', slug=new_order.order_id)
         context = {
             'form': form,
             'book': book

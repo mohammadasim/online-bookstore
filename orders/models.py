@@ -27,13 +27,14 @@ class CustomerOrder(models.Model):
         get_user_model(),
         on_delete=models.SET_DEFAULT,
         related_name='orders',
-        default='anonymous'
+        default='anonymous',
     )
     payment_id = models.ForeignKey(
         CustomerPayment,
         on_delete=models.CASCADE,
         related_name='payment_for_order',
-        blank=True
+        blank=True,
+        null=True
     )
     order_status = models.CharField(
         max_length=3,
@@ -57,7 +58,8 @@ class CustomerOrder(models.Model):
         order_items = self.order_items  # order_items is reverse relationship defined in order_item model
         # Using django aggregate and sum tools we calculate
         # the price of the order, we are using reverse relationship again.
-        self.order_price = order_items.aggregate(Sum('price')) if order_items.exists() else 0.00
+        # the aggregate query returns a dict
+        self.order_price = order_items.aggregate(Sum('price')).get('price__sum') if order_items.exists() else 0.00
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -65,4 +67,4 @@ class CustomerOrder(models.Model):
         A method to return url for an order, with 
         order_id in the url
         """
-        return reverse('order_detail', args=[str(self.order_id)])
+        return reverse('orders: order_detail', args=[str(self.order_id)])

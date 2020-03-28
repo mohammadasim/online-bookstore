@@ -8,18 +8,17 @@
     <p>Customer Details: {{ object.customer_id }}</p>
     <p>Order status: {{ object.order_status }}</p>
     <p>Order Date: {{ object.order_date }}</p>
-    <!--    <p>Order items: {{ object.order_items }}</p>-->
 </div>
 <div>
     <h3>Order Items</h3>
-    <!--    {% for item in object.order_items %}-->
-    <!--    <div>-->
-    <!--        <p>Order item id: {{ item.id }}</p>-->
-    <!--        <p>Book ordered: {{item.book }}</p>-->
-    <!--        <p>Quantity ordered: {{ item.quantity }}</p>-->
-    <!--        <p>Price: {{ item.price }}</p>-->
-    <!--    </div>-->
-    <!--    {% endfor %}-->
+    {% for item in object.order_items.all %}
+    <div>
+        <p>Order item id: {{ item.id }}</p>
+        <p>Book ordered: {{item.book }}</p>
+        <p>Quantity ordered: {{ item.quantity }}</p>
+        <p>Price: {{ item.price }}</p>
+    </div>
+    {% endfor %}
 </div>
 <h5>Total price: {{ object.order_price }}</h5>
 

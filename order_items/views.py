@@ -38,6 +38,7 @@ def order_item_create_view(request, uuid):
                     # if it exists add the quantity ordered to the existing quantity
                     book_already_ordered.first().quantity += order_item.quantity
                     book_already_ordered.first().save()
+                    return redirect('orders:order_detail', slug=order.first().order_id)
                 else:
                     # Create a new order_item for the book
                     new_order_item = OrderItem(quantity=order_item.quantity,

@@ -14,8 +14,12 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     template_name = 'orders/customer_order_detail.html'
     slug_field = 'order_id'
 
-    def get_queryset(self):
-        """
-        Method to show only a pending customer order
-        """
-        return CustomerOrder.objects.get(order_id=self.kwargs['slug'])
+    # def get(self, request, *args, **kwargs):
+    #     order_placed = get_object_or_404(CustomerOrder,
+    #                                      order_id=kwargs['slug'],
+    #                                      customer_id=request.user)
+    #     print(type(order_placed))
+    #     context = {
+    #         'object': order_placed
+    #     }
+    #     return render(request, self.template_name, context=context)

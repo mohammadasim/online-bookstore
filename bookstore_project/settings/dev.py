@@ -1,3 +1,5 @@
+import socket
+
 from .base import *
 
 DEBUG = True
@@ -60,7 +62,17 @@ AWS_DEFAULT_ACL = 'private'
 AWS_S3_FILE_OVERWRITE = False
 
 # django debug toolbar settings
-import socket
+
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + '1' for ip in ips]
+INTERNAL_IPS = ['172.18.0.6']
+
+
+def show_toolbar(request):
+    return True
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+}

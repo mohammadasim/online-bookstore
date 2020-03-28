@@ -67,4 +67,4 @@ class CustomerOrder(models.Model):
         A method to return url for an order, with 
         order_id in the url
         """
-        return reverse('orders: order_detail', args=[str(self.order_id)])
+        return reverse('orders:order_detail', args=[str(self.order_id)])

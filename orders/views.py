@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from .models import CustomerOrder
 
@@ -14,12 +14,18 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
     template_name = 'orders/customer_order_detail.html'
     slug_field = 'order_id'
 
-    # def get(self, request, *args, **kwargs):
-    #     order_placed = get_object_or_404(CustomerOrder,
-    #                                      order_id=kwargs['slug'],
-    #                                      customer_id=request.user)
-    #     print(type(order_placed))
-    #     context = {
-    #         'object': order_placed
-    #     }
-    #     return render(request, self.template_name, context=context)
+
+class OrderListView(LoginRequiredMixin, ListView):
+    """
+    A view to list customer orders
+    """
+    model = CustomerOrder
+    login_url = reverse_lazy('account_login')
+    template_name = 'orders/customer_order_list.html'
+    context_object_name = 'all_orders'
+
+    def get_queryset(self):
+        """
+        Show only the logged in customer's orders
+        """
+        return CustomerOrder.objects.filter(customer_id=self.request.user)

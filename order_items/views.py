@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.views.generic import DeleteView
 
 from books.models import Book
 from orders.models import CustomerOrder
@@ -64,3 +66,13 @@ def order_item_create_view(request, uuid):
             'book': book
         }
         return render(request, 'order_items/order_item_create.html', context=context)
+
+
+class OrderItemDelete(LoginRequiredMixin, DeleteView):
+    """
+    View to delete an Order item from an order
+    """
+    model = OrderItem
+    success_url = reverse_lazy('orders:show_orders')
+    template_name = 'order_items/order_item_delete.html'
+    slug_field = 'id'

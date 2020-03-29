@@ -1,0 +1,10 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Order item Delete{% endblock title %}
+{% block content %}
+<form method="post">{% csrf_token %}
+    <p class="text-warning">Are you sure you want to delete your order for "{{ object.book.title }}"?</p>
+    <input class="btn btn-danger" type="submit" value="Confirm">
+</form>
+
+{% endblock content %}

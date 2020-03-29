@@ -41,4 +41,4 @@ class OrderItem(models.Model):
         A method to get a customer's order for a product
         with the primary key of this order in the url
         """
-        return reverse('order_item_detail', args=[str(self.id)])
+        return reverse('order_items:order_item_delete', args=[str(self.id)])

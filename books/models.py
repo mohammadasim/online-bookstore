@@ -35,4 +35,4 @@ class Book(models.Model):
         """
         A method that will add a book to a cart
         """
-        return reverse('order_items:order_product_create', kwargs={'uuid': self.id})
+        return reverse('order_items:order_item_create', kwargs={'uuid': self.id})

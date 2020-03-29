@@ -24,7 +24,7 @@
                 <tbody>
                 {% for order in all_orders %}
                 <tr>
-                    <th scrope="row">{{ forloop.counter }}</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td><a href="{{ order.get_absolute_url }}">{{ order.order_id }}</a></td>
                     <td>{{ order.order_date }}</td>
                     <td>{{ order.order_status }}</td>

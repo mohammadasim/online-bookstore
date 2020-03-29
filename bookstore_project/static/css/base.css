@@ -1,6 +1,9 @@
 h1 {
     color: red;
 }
+body {
+    font-family: 'Tajawal', sans-serif;
+}
 .bookcover {
     height: 300px;
     width: auto;

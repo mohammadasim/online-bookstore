@@ -13,7 +13,7 @@
     <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
     <link href="{% static 'css/base.css' %}" rel="stylesheet" type="text/css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;900&display=swap" rel="stylesheet">
     <link href="{% static 'favicon_io/favicon.ico' %}" rel="shortcut icon" type="image/png"/>
 </head>
 <body>
@@ -26,7 +26,7 @@
             <a class="p-2 text-dark" href="{% url 'book_list' %}">Books</a>
             <a class="p-2 text-dark" href="{% url 'about' %}">About</a>
             {% if user.is_authenticated %}
-            <a class="p-2 text-dark" href="{% url 'orders:show-orders' %}">My Orders</a>
+            <a class="p-2 text-dark" href="{% url 'orders:show_orders' %}">My Orders</a>
             <a class="p-2 text-dark" href="{% url 'account_logout' %}">Log Out</a>
             {% else %}
             <a class="p-2 text-dark" href="{% url 'account_login' %}">Log In</a>

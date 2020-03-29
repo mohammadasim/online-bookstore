@@ -6,6 +6,6 @@ from .views import OrderDetailView, OrderListView
 app_name = 'orders'
 
 urlpatterns = [
-    path('show', OrderListView.as_view(), name='show-orders'),
+    path('show', OrderListView.as_view(), name='show_orders'),
     path('<slug>', OrderDetailView.as_view(), name='order_detail'),
 ]

@@ -6,8 +6,10 @@
     <div class="card shopping-cart rounded">
         <div class="card-header bg-dark text-light">
             <i aria-hidden="true" class="fa fa-shopping-cart"></i>
-            Shipping cart
-            <a class="btn btn-outline-info btn-sm pull-right" href="{% url 'book_list' %}">Continue shopping</a>
+            Shopping Cart
+            {% if object.order_status == 'PND' %}
+            <a class="btn btn-outline-info btn-sm pull-right" href="{% url 'book_list' %}">Continue Shopping</a>
+            {% endif %}
             <div class="clearfix"></div>
         </div>
 
@@ -17,7 +19,7 @@
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-2 text-center">
                     {% if item.book.cover %}
-                    <img alt="prewiew" class="img-responsive" height="80" src="{{ item.book.cover.url }}" width="120">
+                    <img alt="preview" class="img-responsive" height="80" src="{{ item.book.cover.url }}" width="120">
                     {% endif %}
                 </div>
                 <div class="col-12 text-sm-center col-sm-12 text-md-left col-md-6">
@@ -29,16 +31,23 @@
                     </div>
                     <div class="col-4 col-sm-4 col-md-4">
                         <div class="quantity">
+                            {% if object.order_status == 'PND' %}
                             <input class="plus" type="button" value="+">
                             <input class="qty" max="99" min="1" size="4" step="1" title="Qty" type="number"
                                    value="{{item.quantity}}">
                             <input class="minus" type="button" value="-">
+                            {% endif %}
+                            {{item.quantity}}
                         </div>
                     </div>
                     <div class="col-2 col-sm-2 col-md-2 text-right">
-                        <button class="btn btn-outline-danger btn-xs" type="button">
-                            <i aria-hidden="true" class="fa fa-trash"></i>
-                        </button>
+                        {% if object.order_status == 'PND' %}
+                        <a href="{{ item.get_absolute_url }}">
+                            <button class="btn btn-outline-danger btn-xs" type="button">
+                                <i aria-hidden="true" class="fa fa-trash"></i>
+                            </button>
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -50,26 +59,32 @@
         <hr>
         <!-- END PRODUCT -->
         <div class="pull-right">
+            {% if object.order_status == 'PND' %}
             <a class="btn btn-outline-secondary pull-right" href="">
-                Update shopping cart
+                Update Shopping Cart
             </a>
+            {% endif %}
         </div>
     </div>
     <div class="card-footer">
         <div class="coupon col-md-5 col-sm-5 no-padding-left pull-left">
             <div class="row">
+                {% if object.order_status == 'PND' %}
                 <div class="col-6">
-                    <input class="form-control" placeholder="cupone code" type="text">
+                    <input class="form-control" placeholder="Cupone Code" type="text">
                 </div>
                 <div class="col-6">
-                    <input class="btn btn-default" type="submit" value="Use cupone">
+                    <input class="btn btn-default" type="submit" value="Use Cupone">
                 </div>
+                {% endif %}
             </div>
         </div>
         <div class="pull-right" style="margin: 10px">
+            {% if object.order_status == 'PND' %}
             <a class="btn btn-success pull-right" href="{% url 'home' %}">Checkout</a>
+            {% endif %}
             <div class="pull-right" style="margin: 5px">
-                Total price: <b>£ {{ object.order_price }}</b>
+                Total Price: <b>£ {{ object.order_price }}</b>
             </div>
         </div>
     </div>

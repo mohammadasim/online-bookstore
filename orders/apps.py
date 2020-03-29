@@ -8,3 +8,4 @@ class OrdersConfig(AppConfig):
         """
         importing signal module so it can be invoked when required
         """
+        # pylint: disable=import-error

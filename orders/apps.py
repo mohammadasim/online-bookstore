@@ -9,3 +9,5 @@ class OrdersConfig(AppConfig):
         importing signal module so it can be invoked when required
         """
         # pylint: disable=import-error
+        # noinspection PyUnresolvedReferences
+        import orders.signals

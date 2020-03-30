@@ -42,3 +42,6 @@ class OrderItem(models.Model):
         with the primary key of this order in the url
         """
         return reverse('order_items:order_item_delete', args=[str(self.id)])
+
+    def get_update_url(self):
+        return reverse('order_items:order_item_update', args=[str(self.id)])

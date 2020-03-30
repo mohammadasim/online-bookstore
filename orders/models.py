@@ -68,3 +68,6 @@ class CustomerOrder(models.Model):
         order_id in the url
         """
         return reverse('orders:order_detail', args=[str(self.order_id)])
+
+    def get_delete_url(self):
+        return reverse('orders:order_delete', args=[str(self.order_id)])

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, UpdateView
 
 from books.models import Book
 from orders.models import CustomerOrder
@@ -75,4 +75,28 @@ class OrderItemDelete(LoginRequiredMixin, DeleteView):
     model = OrderItem
     success_url = reverse_lazy('orders:show_orders')
     template_name = 'order_items/order_item_delete.html'
+    login_url = reverse_lazy('account_login')
     slug_field = 'id'
+
+
+class OrderItemUpdate(LoginRequiredMixin, UpdateView):
+    """
+    View to update an Order item
+    """
+    model = OrderItem
+    login_url = reverse_lazy('account_login')
+    success_url = reverse_lazy('orders:show_orders')
+    template_name = 'order_items/order_item_update.html'
+    slug_field = 'id'
+    form_class = OrderItemForm
+
+    def get_form_kwargs(self):
+        """
+        OrderItemForm expects a book object as kwargs
+        This method retrieves the associated book object
+        and pass it to the form
+        """
+        kwargs = super(OrderItemUpdate, self).get_form_kwargs()
+        book = self.get_object().book
+        kwargs['book'] = book
+        return kwargs

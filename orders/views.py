@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, DeleteView
 
 from .models import CustomerOrder
 
@@ -29,3 +29,11 @@ class OrderListView(LoginRequiredMixin, ListView):
         Show only the logged in customer's orders
         """
         return CustomerOrder.objects.filter(customer_id=self.request.user)
+
+
+class OrderDeleteView(LoginRequiredMixin, DeleteView):
+    model = CustomerOrder
+    success_url = reverse_lazy('orders:show_orders')
+    template_name = 'orders/customer_order_delete.html'
+    login_url = reverse_lazy('account_login')
+    slug_field = 'order_id'

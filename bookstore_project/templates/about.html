@@ -1,18 +1,73 @@
 {% extends '_base.html' %}
+{% load static %}
 {% block title %}About{% endblock title %}
 {% block content %}
 <div class="container">
 
     <div class="row">
-        <div class="col-md-8 mb-5">
-            <h2>What We Do</h2>
+        <div class="col-md-12 mb-8">
+            <h2>About us</h2>
             <hr>
+            <p>
+                Online Bookstore is fictional online store that specialises in selling books from a limited
+                number of authors to readers who are passionate about the work of these authors. The idea is to
+                build a strong bond between authors and their readers.
+            </p>
+            <p>
+                This site is personal project to practice various features of web development and Django framework.
+                The author's whose names and books are on this site are purely for learning purposes. I have read these
+                books and enjoyed them and only uploaded their covers to check the functionality of the code
+                that I have written.
+                There is no commercial cause behind this site.
+            </p>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi
                 soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat
                 explicabo, maiores!</p>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni
                 in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate.
                 Voluptatum.</p>
-            <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
         </div>
+        <div class="row">
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img alt="" class="card-img-top" src="{% static 'images/lady.jpg' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">Our Authors</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
+                            necessitatibus neque sequi doloribus.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" href="#">Meet Our Authors!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img alt="" class="card-img-top" src="{% static 'images/alex.jpg' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">Our Social Projects</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
+                            necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" href="#">Find Out More!</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <img alt="" class="card-img-top" src="{% static 'images/iana.jpg' %}">
+                    <div class="card-body">
+                        <h4 class="card-title">Kids Book Clubs</h4>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
+                            necessitatibus neque.</p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-primary" href="#">Find Out More!</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
         {% endblock content %}

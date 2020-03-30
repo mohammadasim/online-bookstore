@@ -1,8 +1,13 @@
-h1 {
-    color: red;
-}
+
 body {
     font-family: 'Tajawal', sans-serif;
+}
+.space {
+    margin-bottom: 80px;
+}
+.bg-info {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 .bookcover {
     height: 300px;
@@ -22,7 +27,7 @@ body {
 .quantity {
     float: left;
     margin-right: 15px;
-    background-color: #eee;
+    margin-top: 4px;
     position: relative;
     width: 80px;
     overflow: hidden
@@ -83,4 +88,7 @@ body {
 }
 .shopping-cart {
     margin-top: 20px;
+}
+.d-flex a {
+    margin-right: 3px;
 }

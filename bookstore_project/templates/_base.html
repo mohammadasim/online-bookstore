@@ -15,13 +15,15 @@
     <link href="{% static 'css/base.css' %}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;900&display=swap" rel="stylesheet">
     <link href="{% static 'favicon_io/favicon.ico' %}" rel="shortcut icon" type="image/png"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" rel="stylesheet" type="text/css">
+    {% block customstyle %} {% endblock customstyle %}
 </head>
 <body>
 <header>
     <!-- Fixed navbar -->
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4\
      mb-3 bg-white border-bottom shadow-sm">
-        <a class="navbar-brand my-0 mr-md-auto font-weight-normal" href="{% url 'home' %}">Bookstore</a>
+        <a class="navbar-brand my-0 mr-md-auto font-weight-normal" href="{% url 'home' %}">Online Bookstore</a>
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="{% url 'book_list' %}">Books</a>
             <a class="p-2 text-dark" href="{% url 'about' %}">About</a>
@@ -39,7 +41,23 @@
 <div class="container">
     {% block content %}
     {% endblock content %}
+
+
 </div>
+<div class="space"></div>
+<div class="container">
+    <hr>
+</div>
+<!-- Footer -->
+<div class="container">
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Online Bookstore 2020</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+</div>
+<div class="space"></div>
 <!-- Javascript -->
 {% block javascript %}
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -57,5 +75,3 @@
 </html>
 
 {% endblock javascript %}
-</body>
-</html>

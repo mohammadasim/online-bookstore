@@ -52,9 +52,21 @@
     <div class="row">
         <div class="col-md-8 mb-5">
             {% if user.is_authenticated %}
-            <h2>Welcome {{ user.username }}</h2>
+            <h2>Welcome {{ user.username | capfirst }}</h2>
             {% endif %}
             <hr>
+            <p>
+                Online Bookstore is fictional online store that specialises in selling books from a limited
+                number of authors to readers who are passionate about the work of these authors. The idea is to
+                build a strong bond between authors and their readers.
+            </p>
+            <p>
+                This site is personal project to practice various features of web development and Django framework.
+                The author's whose names and books are on this site are purely for learning purposes. I have read these
+                books and enjoyed them and only uploaded their covers to check the functionality of the code
+                that I have written.
+                There is no commercial cause behind this site.
+            </p>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi
                 soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat
                 explicabo, maiores!</p>
@@ -67,9 +79,9 @@
             <h2>Contact Us</h2>
             <hr>
             <address>
-                <strong>Start Bootstrap</strong>
+                <strong>Online Bookstore</strong>
                 <br>3481 Melrose Place
-                <br>Beverly Hills, CA 90210
+                <br>London, WC1B 9GZ
                 <br>
             </address>
             <address>
@@ -77,7 +89,7 @@
                 (123) 456-7890
                 <br>
                 <abbr title="Email">E:</abbr>
-                <a href="mailto:#">name@example.com</a>
+                <a href="mailto:#">info@onlinebookstore.com</a>
             </address>
         </div>
     </div>
@@ -88,12 +100,12 @@
             <div class="card h-100">
                 <img alt="" class="card-img-top" src="{% static 'images/lady.jpg' %}">
                 <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
+                    <h4 class="card-title">Our Authors</h4>
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
                         necessitatibus neque sequi doloribus.</p>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-primary" href="#">Find Out More!</a>
+                    <a class="btn btn-primary" href="#">Meet Our Authors!</a>
                 </div>
             </div>
         </div>
@@ -101,7 +113,7 @@
             <div class="card h-100">
                 <img alt="" class="card-img-top" src="{% static 'images/alex.jpg' %}">
                 <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
+                    <h4 class="card-title">Our Social Projects</h4>
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
                         necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
                 </div>
@@ -114,7 +126,7 @@
             <div class="card h-100">
                 <img alt="" class="card-img-top" src="{% static 'images/iana.jpg' %}">
                 <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
+                    <h4 class="card-title">Kids Book Clubs</h4>
                     <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse
                         necessitatibus neque.</p>
                 </div>
@@ -128,12 +140,4 @@
 
 </div>
 <!-- /.container -->
-
-<!-- Footer -->
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Bookstore 2020</p>
-    </div>
-    <!-- /.container -->
-</footer>
 {% endblock content %}

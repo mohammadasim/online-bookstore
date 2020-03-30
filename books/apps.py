@@ -8,6 +8,5 @@ class BooksConfig(AppConfig):
         """
         Importing signals module, so they can be invoked
         """
-        # pylint: disable=import-error
         # noinspection PyUnresolvedReferences
         import books.signals

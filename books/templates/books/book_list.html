@@ -1,11 +1,50 @@
 {% extends '_base.html' %}
-
+{% load static %}
 {% block title %}Books{% endblock title %}
-
+{% block customstyle %}
+<link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+{% endblock customstyle %}
 {% block content %}
-{% for book in book_list %}
-<div>
-    <h2><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h2>
+<div class="cards">
+    {% for book in book_list %}
+    <div class="card">
+        <div class="card-image">
+            {% if book.cover %}
+            <img src="{{ book.cover.url }}"/>
+            {% endif %}
+        </div>
+        <div class="card-info">
+            <a href="{{ book.get_absolute_url }}"> {{ book.title}}</a>
+        </div>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
+
+
+<script src="{% static 'js/pinterestgrid.js' %}"></script>
+<script type="text/javascript">
+        (function() {
+            'use strict';
+
+            var grid = new PinterestGrid({
+                container: '.cards',
+                item: '.card',
+                gutter: 10,
+                delay: 200
+            });
+
+            window.addEventListener('resize', function() {
+                grid.init();
+            });
+
+            Array.from(document.querySelectorAll('.card img')).forEach(function(item) {
+                item.addEventListener('load', function() {
+                    grid.init();
+                    item.removeEventListener('load');
+                }, false);
+            });
+
+        }());
+
+</script>
 {% endblock content %}

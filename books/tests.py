@@ -21,7 +21,7 @@ class BookTests(TestCase):
         self.assertEqual(self.book.price, '50.00')
 
     def test_book_list_view(self):
-        response = self.client.get(reverse('book_list'))
+        response = self.client.get(reverse('books:book_list'))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'The fifth discipline')
         self.assertNotContains(response, 'My new book')

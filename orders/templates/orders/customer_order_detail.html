@@ -8,7 +8,7 @@
             <i aria-hidden="true" class="fa fa-shopping-cart"></i>
             Shopping Cart
             {% if object.order_status == 'PND' %}
-            <a class="btn btn-outline-info btn-sm pull-right" href="{% url 'book_list' %}">Continue Shopping</a>
+            <a class="btn btn-outline-info btn-sm pull-right" href="{% url 'books:book_list' %}">Continue Shopping</a>
             {% endif %}
             <div class="clearfix"></div>
         </div>
@@ -78,7 +78,7 @@
         </div>
         <div class="pull-right" style="margin: 10px">
             {% if object.order_status == 'PND' %}
-            <a class="btn btn-success pull-right" href="{% url 'home' %}">Checkout</a>
+            <a class="btn btn-success pull-right" href="{% url 'pages:home' %}">Checkout</a>
             {% endif %}
             <div class="pull-right" style="margin: 5px">
                 Total Price: <b>£ {{ object.order_price }}</b>

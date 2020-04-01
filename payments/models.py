@@ -17,8 +17,8 @@ class CustomerPayment(models.Model):
     customer_id = models.ForeignKey(
         get_user_model(),
         on_delete=models.SET_DEFAULT,
-        related_name='order',
-        default='anonymous'
+        related_name='payments',
+        default=''
     )
     payment_date = models.DateField(
         'Payment Date',

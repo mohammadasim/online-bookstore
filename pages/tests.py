@@ -8,7 +8,7 @@ class HomepageTests(SimpleTestCase):
     """ Test class for HomePage """
 
     def setUp(self) -> None:
-        url = reverse('home')
+        url = reverse('pages:home')
         self.response = self.client.get(url)
 
     def test_home_page_status_code(self):

@@ -29,7 +29,7 @@ class Book(models.Model):
         A method to return url for a book, with book's primary key
         in the url. This url is used to get BookDetailView
         """
-        return reverse('book_detail', args=[str(self.id)])
+        return reverse('books:book_detail', args=[str(self.id)])
 
     def get_add_to_cart_url(self):
         """

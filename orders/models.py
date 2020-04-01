@@ -27,7 +27,7 @@ class CustomerOrder(models.Model):
         get_user_model(),
         on_delete=models.SET_DEFAULT,
         related_name='orders',
-        default='anonymous',
+        default='',
     )
     payment_id = models.ForeignKey(
         CustomerPayment,

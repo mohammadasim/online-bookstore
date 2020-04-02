@@ -46,4 +46,4 @@ class Review(models.Model):
         A method to return url for a review, with reviews's primary key
         in the url.
         """
-        return reverse('review_update', args=[str(self.id)])
+        return reverse('reviews:review_update', args=[str(self.id)])

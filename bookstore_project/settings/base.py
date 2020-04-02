@@ -12,6 +12,20 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+from django.core.exceptions import ImproperlyConfigured
+
+
+def get_env_variable(var_name):
+    """
+    Get the environment variable or return exception
+    """
+    try:
+        return os.environ.get(var_name)
+    except KeyError:
+        error_msg = 'Set the {} environment variable'.format(var_name)
+        raise ImproperlyConfigured(error_msg)
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -19,10 +33,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
+SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -41,7 +54,6 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'django_celery_results',
-    'debug_toolbar',
     # local
     'users.apps.UsersConfig',
     'pages.apps.PagesConfig',
@@ -60,7 +72,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'bookstore_project.urls'
@@ -89,11 +100,11 @@ WSGI_APPLICATION = 'bookstore_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get('PGSQL_DB_NAME'),
-        'USER': os.environ.get('PGSQL_DB_USER'),
-        'PASSWORD': os.environ.get('PGSQL_DB_PASW'),
-        'HOST': os.environ.get('PGSQL_DB_HOST'),
-        'PORT': os.environ.get('PGSQL_DB_PORT')
+        'NAME': get_env_variable('PGSQL_DB_NAME'),
+        'USER': get_env_variable('PGSQL_DB_USER'),
+        'PASSWORD': get_env_variable('PGSQL_DB_PASW'),
+        'HOST': get_env_variable('PGSQL_DB_HOST'),
+        'PORT': get_env_variable('PGSQL_DB_PORT')
     }
 }
 
@@ -142,3 +153,39 @@ STATICFILES_FINDERS = [
 AUTH_USER_MODEL = 'users.CustomUser'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# django-allauth config
+SITE_ID = 1
+
+# Authentication backend settings
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+LOGIN_REDIRECT_URL = 'pages:home'
+ACCOUNT_LOGOUT_REDIRECT = 'pages:home'
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+DEFAULT_FROM_EMAIL = 'admin@onlinebookstore.com'
+
+# Media settings
+""" Removed MEDIA_ROOT as django-storage will upload the files to s3"""
+MEDIA_URL = '/media/'
+
+# CELERY SETTINGS
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = 'UTC'
+
+# DJANGO STORAGE SETTINGS
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_KEY')
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'  # replacing MEDIA_ROOT
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.environ.get('AWS_REGION')
+AWS_DEFAULT_ACL = 'private'
+# Do not overwrite files with the same name
+AWS_S3_FILE_OVERWRITE = False

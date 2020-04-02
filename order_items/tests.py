@@ -1,10 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.urls import resolve
 
 from books.models import Book
 from orders.models import CustomerOrder
 from payments.models import CustomerPayment
 from .models import OrderItem
+from .views import order_item_create_view
 
 
 class OrderItemTests(TestCase):
@@ -48,3 +50,19 @@ class OrderItemTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(self.book.get_add_to_cart_url(), follow=True)
         self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'order_items/order_item_create.html')
+        self.assertContains(response, self.order_item.book.title)
+        self.assertContains(response, 'Order Book')
+        self.assertNotContains(response, 'Hello World')
+        response = self.client.post(self.book.get_add_to_cart_url(), {
+            'book': self.book,
+            'quantity': 1
+        }, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_order_item_create_item_order_resolves_order_item_create_view(self):
+        view = resolve(self.book.get_add_to_cart_url())
+        self.assertEqual(
+            view.func.__name__,
+            order_item_create_view.as_view().__name__
+        )

@@ -18,7 +18,7 @@ class HomepageTests(SimpleTestCase):
         self.assertTemplateUsed(self.response, 'home.html')
 
     def test_home_page_contains_correct_html(self):
-        self.assertContains(self.response, 'Home page')
+        self.assertContains(self.response, 'Contact Us')
 
     def test_home_page_does_not_contain_incorrect_html(self):
         self.assertNotContains(self.response, 'Hello world')
@@ -37,7 +37,7 @@ class AboutPageTests(SimpleTestCase):
     """ Test class for About Page """
 
     def setUp(self) -> None:
-        url = reverse('about')
+        url = reverse('pages:about')
         self.response = self.client.get(url)
 
     def test_aboutpage_status_code(self):
@@ -47,7 +47,7 @@ class AboutPageTests(SimpleTestCase):
         self.assertTemplateUsed(self.response, 'about.html')
 
     def test_aboutpage_contains_correct_html(self):
-        self.assertContains(self.response, 'About Page')
+        self.assertContains(self.response, 'About us')
 
     def test_aboutpage_does_not_contain_incorrect_html(self):
         self.assertNotContains(self.response, 'Hello world')

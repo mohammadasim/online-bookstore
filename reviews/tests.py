@@ -49,12 +49,12 @@ class ReviewTest(TestCase):
         worry about password or anything. If login is used the test will fail
         """
         self.client.force_login(self.user)
-        response = self.client.get(reverse('review_create'), follow=True)
+        response = self.client.get(reverse('reviews:review_create'), follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'reviews/review_create_form.html')
         self.assertContains(response, 'Write Review')
         self.assertNotContains(response, 'Hello world')
-        response = self.client.post(reverse('review_create'), {
+        response = self.client.post(reverse('reviews:review_create'), {
             'title': 'abc',
             'review': 'def',
             'type': 'POS',
@@ -82,10 +82,7 @@ class ReviewTest(TestCase):
                                         'title': 'A bad book'
                                     },
                                     follow=True)
-        # response = self.client.get(self.review.get_absolute_url(), follow=True)
         self.assertEqual(response.status_code, 200)
-        review = Review.objects.all()
-        print(review)
 
 
 class LoginRequiredCreateReviewView(TestCase):
@@ -95,7 +92,7 @@ class LoginRequiredCreateReviewView(TestCase):
     """
 
     def test_redirection(self):
-        url = reverse('review_create')
+        url = reverse('reviews:review_create')
         login_url = reverse('account_login')
         response = self.client.get(url)
         self.assertRedirects(response, '{login_url}?next={url}'.format(login_url=login_url, url=url))

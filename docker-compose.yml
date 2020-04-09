@@ -24,7 +24,6 @@ services:
       - ~/.docker_db_data/postgres:/var/lib/postgresql/data
     env_file: 
       - postgres-env.list
-    restart: always
     networks: 
       - books
   

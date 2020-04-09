@@ -72,6 +72,7 @@ class OrderItemTests(TestCase):
         order_item = OrderItem.objects.get(book=new_book)
         self.assertEqual(order_item.book, new_book)
         self.assertEqual(order_item.quantity, 1)
+        self.assertEqual(order_item.price, order_item.quantity * new_book.price)
 
     def test_order_item_update_get(self):
         response = self.client.get(self.order_item.get_update_url(), follow=True)
@@ -87,3 +88,20 @@ class OrderItemTests(TestCase):
         self.assertEqual(response.status_code, 200)
         order_item = OrderItem.objects.get(book=self.book)
         self.assertEqual(order_item.quantity, 5)
+
+    def test_order_item_update_post_decrement(self):
+        response = self.client.post(self.order_item.get_update_url(), {
+            'book': self.book,
+            'quantity': 2,
+            'order_id': self.order
+        }, follow=True)
+        self.assertEqual(response.status_code, 200)
+        order_item = OrderItem.objects.get(book=self.book)
+        self.assertEqual(order_item.quantity, 2)
+        self.assertEqual(order_item.price, self.book.price * order_item.quantity)
+
+    def test_order_item_delete(self):
+        response = self.client.post(self.order_item.get_absolute_url(), follow=True)
+        order_item = OrderItem.objects.filter(book=self.book)
+        self.assertFalse(order_item.exists())
+        self.assertEqual(response.status_code, 200)

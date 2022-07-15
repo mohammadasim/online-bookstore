@@ -5,7 +5,7 @@ django-allauth==0.41.0
 Pillow==7.0.0
 celery==4.4.1
 redis==3.4.1
-django-celery-results==1.2.1
+django-celery-results==2.4.0
 boto3==1.12.22
 django-storages==1.9.1
 django-debug-toolbar==2.2
